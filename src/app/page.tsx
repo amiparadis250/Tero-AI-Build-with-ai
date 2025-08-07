@@ -5,10 +5,10 @@ import Link from 'next/link'
 
 function page() {
   return (
-    <div className='bg-white h-screen w-screen'>
+    <div className=' h-screen w-screen'>
       Welcome to Tero AI 
 
-      Go to <Link href="/dashboard">Login</Link>
+      Go to <Link href="/dashboard">Dashboard</Link>
 
 
     </div>

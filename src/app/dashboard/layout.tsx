@@ -1,5 +1,4 @@
 "use client";
-
 import { type ReactNode, useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import localFont from "next/font/local";
@@ -9,33 +8,17 @@ import { Avatar, ConfigProvider, Dropdown, Space, MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import images from "@/utils/constants/image";
-import {
-  Home,
-  Bell,
-  CreditCard,
-  Video,
-  MessageSquare,
-  Lock,
-  HelpCircle,
-  Settings,
-  LogOut,
-  ChevronsLeft,
-  ChevronsRight,
-  Speech,
-} from "lucide-react";
-
+import { Home, Bell, Video, MessageSquare, HelpCircle, Settings, LogOut, ChevronsLeft, ChevronsRight, Speech, Target, Map, Gauge, FolderKanban, Award, FileText, Briefcase, ClipboardCheck, Layers, Users, WifiOff, UsersRound, CreditCard, Lock, FilePlus2 } from 'lucide-react';
 import "./../globals.css";
 import antdTheme from "@/utils/config/antdConfig";
 
 const { Header, Sider, Content } = Layout;
 
-// Font configurations
 const geistSans = localFont({
   src: "./../fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
-
 const geistMono = localFont({
   src: "../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -48,64 +31,49 @@ type MenuItem = {
   label?: string;
   path?: string;
   type?: "divider";
+  children?: MenuItem[];
 };
 
 const SIDEBAR_ITEMS: MenuItem[] = [
   { key: "home", icon: <Home size={20} />, label: "Home", path: "/dashboard" },
-  // {
-  //   key: "notification",
-  //   icon: <Bell size={20} />,
-  //   label: "Notification",
-  //   path: "/dashboard/notification",
-  // },
-  // {
-  //   key: "subscription",
-  //   icon: <CreditCard size={20} />,
-  //   label: "Subscription",
-  //   path: "/dashboard/subscription",
-  // },
+  {
+    key: "my-learning-path",
+    icon: <Target size={20} />,
+    label: "My Learning Path",
+    children: [
+      { key: "goal-setting", icon: <Target size={20} />, label: "Goal Setting", path: "/dashboard/goal-setting" },
+      { key: "recommended-paths", icon: <Map size={20} />, label: "Recommended Paths", path: "/dashboard/recommended-paths" },
+      { key: "my-skills-dashboard", icon: <Gauge size={20} />, label: "My Skills Dashboard", path: "/dashboard/my-skills-dashboard" },
+    ],
+  },
+  { key: "practice-projects", icon: <FolderKanban size={20} />, label: "Practice & Projects", path: "/dashboard/practice-projects" },
+  {
+    key: "my-portfolio",
+    icon: <Award size={20} />,
+    label: "My Portfolio",
+    children: [
+      { key: "project-showcase", icon: <Layers size={20} />, label: "Project Showcase", path: "/dashboard/project-showcase" },
+      { key: "skills-badges", icon: <Award size={20} />, label: "Certificates", path: "/dashboard/skills-badges" },
+      { key: "resume-builder", icon: <FileText size={20} />, label: "Resume Builder", path: "/dashboard/resume-builder" },
+    ],
+  },
+  {
+    key: "career-opportunities",
+    icon: <Briefcase size={20} />,
+    label: "Career Opportunities",
+    children: [
+      { key: "job-board", icon: <Users size={20} />, label: "Job Board", path: "/dashboard/job-board" },
+      { key: "mock-interviews", icon: <ClipboardCheck size={20} />, label: "Mock Interviews", path: "/dashboard/mock-interviews" },
+    ],
+  },
   { key: "divider-1", type: "divider" },
-  {
-    key: "text-to-video",
-    icon: <Video size={20} />,
-    label: "Text To Video",
-    path: "/dashboard/text-to-video", 
-  },
-  {
-    key: "voice-to-video",
-    icon: <Speech size={20} />,
-    label: "Voice to Video",
-    path: "/dashboard/voice-to-video", 
-  },
-  {
-    key: "ai-chat",
-    icon: <MessageSquare size={20} />,
-    label: "AI Chat",
-    path: "/dashboard/ai-chat", 
-  },
-  // {
-  //   key: "unlock-premium",
-  //   icon: <Lock size={20} />,
-  //   label: "Unlock Premium",
-  //   path: "dashboard//unlock-premium",
-  // },
+  { key: "text-to-video", icon: <Video size={20} />, label: "Text To Video", path: "/dashboard/text-to-video" },
+  { key: "voice-to-video", icon: <Speech size={20} />, label: "Voice to Video", path: "/dashboard/voice-to-video" },
+  { key: "ai-chat", icon: <MessageSquare size={20} />, label: "AI Chat", path: "/dashboard/ai-chat" },
   { key: "divider-2", type: "divider" },
-  { key: "help", icon: <HelpCircle size={20} />, label: "Help", path: "/help" },
-  {
-    key: "settings",
-    icon: <Settings size={20} />,
-    label: "Settings",
-    path: "/dashboard/settings",
-  },
-  // {
-  //   key: "logout",
-  //   icon: <LogOut size={20} />,
-  //   label: "Logout",
-  //   path: "/logout",
-  // },
+  { key: "offline-content", icon: <WifiOff size={20} />, label: "Offline Content", path: "/dashboard/offline-content" },
+  { key: "community-hubs", icon: <UsersRound size={20} />, label: "Community & Hubs", path: "/dashboard/community-hubs" },
 ];
-
-
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -122,11 +90,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [activeMenuKey, setActiveMenuKey] = useState(pathname);
+  const [openKeys, setOpenKeys] = useState<string[]>([]); // Only one open
 
   const mockUserProfile: UserProfile = {
     full_names: "Ami Paradis",
-    profile_image:
-      "https://res.cloudinary.com/dv9cz01fi/image/upload/v1738316635/lyh6k4nhu3sxe6t5u4ql.jpg",
+    profile_image: "https://res.cloudinary.com/dv9cz01fi/image/upload/v1738316635/lyh6k4nhu3sxe6t5u4ql.jpg",
   };
 
   const {
@@ -141,140 +109,83 @@ export default function RootLayout({ children }: RootLayoutProps) {
     router.push("/login");
   };
 
-  const menuItems: MenuProps["items"] = SIDEBAR_ITEMS.map((item) => {
-    if (item.type === "divider") {
+  const generateMenuItems = (items: MenuItem[]): MenuProps["items"] =>
+    items.map((item) => {
+      if (item.type === "divider") return { type: "divider", key: item.key };
+      if (item.children) {
+        return { key: item.key, icon: item.icon, label: item.label, children: generateMenuItems(item.children) };
+      }
       return {
-        type: "divider",
         key: item.key,
+        icon: item.icon,
+        label: item.label,
+        onClick: () => {
+          if (item.path) {
+            setActiveMenuKey(item.key);
+            router.push(item.path);
+          }
+        },
       };
-    }
-    return {
-      key: item.key,
-      icon: item.icon,
-      label: item.label,
-      onClick: item.key === "logout" ? handleLogout : undefined,
-    };
-  });
-
-  const handleMenuClick = (e: { key: string }) => {
-    const selectedItem = SIDEBAR_ITEMS.find((item) => item.key === e.key);
-    if (selectedItem?.path && !selectedItem.type) {
-      setActiveMenuKey(e.key);
-      router.push(selectedItem.path);
-    }
-  };
+    });
 
   const dropdownItems: MenuProps["items"] = [
     { key: "profile", label: "Profile" },
-    {
-      key: "logout",
-      danger: true,
-      icon: <LogOut />,
-      label: "Logout",
-      onClick: handleLogout,
-    },
+    { key: "logout", danger: true, icon: <LogOut />, label: "Logout", onClick: handleLogout },
   ];
+
+  const onOpenChange = (keys: string[]) => {
+    const latestOpenKey = keys.find((key) => !openKeys.includes(key));
+    setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+  };
 
   if (!isClient) return null;
 
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AntdRegistry>
           <ConfigProvider theme={antdTheme}>
-            <Layout className=" h-[100vh] bg-white">
+            <Layout className="h-[100vh] bg-white">
               <Sider
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
-                className="h-full bg-white border-r"
                 width={240}
-                style={{
-                  overflow: "auto",
-                  height: "100vh",
-                  left: 0,
-                  background: colorBgContainer,
-                }}
+                style={{ background: colorBgContainer, display: "flex", flexDirection: "column" }}
               >
-                <div
-                  className="relative flex items-center justify-center"
-                  style={{ right: collapsed ? "0px" : "32px" }}
-                >
-                  <Image
-                    src={images.logo}
-                    alt="Tero AI"
-                    width={collapsed ? 40 : 120}
-                    height={40}
+                {/* Logo */}
+                <div className="flex items-center justify-center p-4">
+                  <Image src={images.logo || "/placeholder.svg"} alt="Tero AI" width={collapsed ? 40 : 120} height={40} />
+                </div>
+                {/* Menu */}
+                <div style={{ flex: 1, overflowY: "auto" }}>
+                  <Menu
+                    theme="light"
+                    mode="inline"
+                    selectedKeys={[activeMenuKey]}
+                    openKeys={openKeys}
+                    onOpenChange={onOpenChange}
+                    items={generateMenuItems(SIDEBAR_ITEMS)}
                   />
                 </div>
-                <Menu
-                  theme="light"
-                  mode="inline"
-                  className="border-none"
-                  selectedKeys={[activeMenuKey]}
-                  items={menuItems}
-                  onClick={handleMenuClick}
-                />
-                <div className="absolute left-0 right-0 px-4 bottom-4">
-                  <Dropdown
-                    menu={{ items: dropdownItems }}
-                    trigger={["click"]}
-                    placement="topRight"
-                  >
-                    <div className="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-gray-100">
-                      <Avatar
-                        size="large"
-                        src={mockUserProfile.profile_image}
-                        icon={<UserOutlined />}
-                      />
-                      {!collapsed && (
-                        <span className="font-bold text-black black">
-                          {mockUserProfile.full_names}
-                        </span>
-                      )}
-                    </div>
-                  </Dropdown>
-                </div>
+                {/* Profile Section - Removed from sidebar */}
               </Sider>
               <Layout>
-                <Header
-                  style={{ padding: 0, background: colorBgContainer }}
-                  className="flex items-center justify-between px-4 border-b"
-                >
-                  {/* Sidebar Toggle Button */}
-                  <Button
-                    type="text"
-                    icon={collapsed ? <ChevronsRight /> : <ChevronsLeft />}
-                    onClick={() => setCollapsed(!collapsed)}
-                  />
-
-                  {/* Always Show Welcome Message on Larger Screens */}
-                  <div
-                    className={`flex-1 relative left-3 ${
-                      collapsed ? "block" : "hidden"
-                    } lg:block`}
-                  >
-                    <p className="text-sm font-medium text-black">{`Welcome, ${mockUserProfile.full_names}`}</p>
-                  </div>
-
-                  {/* Notification & Help Icons */}
+                <Header style={{ padding: 0, background: colorBgContainer }} className="flex items-center justify-between px-4 border-b">
+                  <Button type="text" icon={collapsed ? <ChevronsRight /> : <ChevronsLeft />} onClick={() => setCollapsed(!collapsed)} />
+                  <div className="flex-1" /> {/* Spacer to push items to the right */}
                   <Space size="middle">
                     <Button type="text" icon={<HelpCircle />} />
                     <Button type="text" icon={<Bell />} />
+                    <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
+                      <div className="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-gray-100">
+                        <Avatar size="large" src={mockUserProfile.profile_image} icon={<UserOutlined />} />
+                        <span className="font-bold text-black hidden md:block">{mockUserProfile.full_names}</span>
+                      </div>
+                    </Dropdown>
                   </Space>
                 </Header>
-
-                <Content
-                  style={{
-                    margin: "24px",
-                    padding: 24,
-                    minHeight: 280,
-                    background: colorBgContainer,
-                    borderRadius: borderRadiusLG,
-                  }}
-                >
+                <Content style={{ margin: "24px", padding: 24, minHeight: 280, background: colorBgContainer, borderRadius: borderRadiusLG }}>
                   {children}
                 </Content>
               </Layout>
