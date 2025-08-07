@@ -154,7 +154,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 style={{ background: colorBgContainer, display: "flex", flexDirection: "column" }}
               >
                 {/* Logo */}
-                <div className="flex items-center justify-center p-4">
+                <div className="flex items-center justify-center p-1">
                   <Image src={images.logo || "/placeholder.svg"} alt="Tero AI" width={collapsed ? 40 : 120} height={40} />
                 </div>
                 {/* Menu */}
