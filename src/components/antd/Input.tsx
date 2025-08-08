@@ -15,7 +15,7 @@ const TextInput: React.FC = (onChange:any) => (
       showCount
       maxLength={100}
       onChange={onChange}
-      placeholder="Generate a video to learn step-by-step techniques for storing fresh tomatoes and reducing post-harvest losses."
+      placeholder="Generate a video to learn step-by-step  cloud computing"
       style={{ height: 120, resize: 'none' }}
     />
   

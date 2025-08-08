@@ -13,10 +13,11 @@ interface OfflineResource {
 }
 
 const offlineContent: OfflineResource[] = [
-  { id: 1, title: "React Hooks Deep Dive (Video)", type: "Video", size: "150 MB", downloaded: false },
-  { id: 2, title: "Next.js Performance Guide (PDF)", type: "PDF", size: "5 MB", downloaded: true },
-  { id: 3, title: "Advanced CSS Techniques (Article)", type: "Article", size: "2 MB", downloaded: false },
-  { id: 4, title: "Python for Data Science (Video)", type: "Video", size: "300 MB", downloaded: false },
+  { id: 1, title: "Introduction to Penetration Testing (Video)", type: "Video", size: "200 MB", downloaded: false },
+  { id: 2, title: "Kubernetes Deployment Best Practices (PDF)", type: "PDF", size: "6 MB", downloaded: true },
+  { id: 3, title: "Securing APIs with OAuth2 (Article)", type: "Article", size: "3 MB", downloaded: false },
+  { id: 4, title: "Ethical Hacking with Metasploit (Video)", type: "Video", size: "350 MB", downloaded: false },
+ 
 ];
 
 export default function OfflineContentPage() {

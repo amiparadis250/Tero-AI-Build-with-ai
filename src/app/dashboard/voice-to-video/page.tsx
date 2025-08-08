@@ -146,7 +146,7 @@ import { AudioOutlined, StopOutlined, DeleteOutlined } from "@ant-design/icons";
       {/* Right Side: Video Preview */}
       <div className="w-[60%] h-[60vh] bg-black rounded-lg overflow-hidden">
         <ReactPlayer
-          url="https://zmooz-bucket.s3.bhs.io.cloud.ovh.net/asset/media-d6b7b4b2-74a8-4d2b-b7b2-47bec7fb3682/Best-Practices-for-Storing-and-Preserving-Maize-Harvest-BJYAJ.mp4"
+          url="https://youtu.be/lv37ygwXnc4?si=x1H5ojWrpYkff1ZH"
           width="100%"
           height="100%"
           controls

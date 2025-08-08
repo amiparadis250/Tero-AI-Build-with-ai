@@ -14,28 +14,29 @@ interface LearningPath {
 const recommendedPaths: LearningPath[] = [
   {
     id: 1,
-    title: "Frontend Web Development Masterclass",
-    description: "Learn React, Next.js, and Tailwind CSS to build modern web applications.",
+    title: "Cybersecurity Fundamentals and Ethical Hacking",
+    description: "Learn network security, penetration testing, and threat mitigation to protect digital assets.",
     duration: "12 weeks",
   },
   {
     id: 2,
-    title: "Backend API Development with Node.js",
-    description: "Master Node.js, Express, and MongoDB for robust backend services.",
+    title: "DevOps Masterclass with CI/CD",
+    description: "Master Docker, Kubernetes, and continuous integration/continuous deployment pipelines for modern software delivery.",
     duration: "10 weeks",
   },
-  {
-    id: 3,
-    title: "Data Science Fundamentals with Python",
-    description: "Explore data analysis, machine learning, and visualization using Python.",
-    duration: "15 weeks",
-  },
-  {
-    id: 4,
-    title: "Mobile App Development with React Native",
-    description: "Build cross-platform mobile applications for iOS and Android.",
-    duration: "8 weeks",
-  },
+  
+//   {
+//     id: 3,
+//     title: "Data Science Fundamentals with Python",
+//     description: "Explore data analysis, machine learning, and visualization using Python.",
+//     duration: "15 weeks",
+//   },
+//   {
+//     id: 4,
+//     title: "Mobile App Development with React Native",
+//     description: "Build cross-platform mobile applications for iOS and Android.",
+//     duration: "8 weeks",
+//   },
 ];
 
 export default function RecommendedPathsPage() {
